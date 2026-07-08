@@ -30,7 +30,9 @@ export const useFavoritesStore = create<FavoritesState>()(
         })),
       removeMultipleFavorites: productIds =>
         set(state => ({
-          favorites: state.favorites.filter(fav => !productIds.includes(fav.id)),
+          favorites: state.favorites.filter(
+            fav => !productIds.includes(fav.id),
+          ),
         })),
       clearFavorites: () => set({ favorites: [] }),
       isFavorite: productId => {

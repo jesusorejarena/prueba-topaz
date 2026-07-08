@@ -21,35 +21,65 @@ export default function CategoriesModal({
   return (
     <Modal visible={visible} animationType="slide" transparent={true}>
       <View className="flex-1 justify-end bg-black/50">
-        <TouchableOpacity 
+        <TouchableOpacity
           className="flex-1"
-          onPress={onClose} 
+          onPress={onClose}
           activeOpacity={1}
         />
         <View className="bg-white rounded-t-[32px] pt-6 px-6 pb-12 max-h-[80%]">
           <View className="flex-row justify-between items-center mb-6">
-            <Text className="text-2xl font-black text-gray-900 tracking-tight">Todas las categorías</Text>
-            <TouchableOpacity onPress={onClose} className="bg-gray-100 p-2 rounded-full">
+            <Text className="text-2xl font-black text-gray-900 tracking-tight">
+              Todas las categorías
+            </Text>
+            <TouchableOpacity
+              onPress={onClose}
+              className="bg-gray-100 p-2 rounded-full"
+            >
               <X size={20} color={COLORS.textDark} />
             </TouchableOpacity>
           </View>
-          <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="pb-10">
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerClassName="pb-10"
+          >
             <View className="flex-row flex-wrap gap-2">
               <TouchableOpacity
-                onPress={() => { setSelectedCategory(null); onClose(); }}
-                className={`px-4 py-2.5 rounded-full border ${!selectedCategory ? 'bg-gray-900 border-gray-900' : 'bg-white border-gray-200'}`}
+                onPress={() => {
+                  setSelectedCategory(null);
+                  onClose();
+                }}
+                className={`px-4 py-2.5 rounded-full border ${
+                  !selectedCategory
+                    ? 'bg-gray-900 border-gray-900'
+                    : 'bg-white border-gray-200'
+                }`}
               >
-                <Text className={`font-bold ${!selectedCategory ? 'text-white' : 'text-gray-600'}`}>
+                <Text
+                  className={`font-bold ${
+                    !selectedCategory ? 'text-white' : 'text-gray-600'
+                  }`}
+                >
                   Todos
                 </Text>
               </TouchableOpacity>
               {categories.map((cat, index) => (
                 <TouchableOpacity
                   key={index}
-                  onPress={() => { setSelectedCategory(cat); onClose(); }}
-                  className={`px-4 py-2.5 rounded-full border ${selectedCategory === cat ? 'bg-gray-900 border-gray-900' : 'bg-white border-gray-200'}`}
+                  onPress={() => {
+                    setSelectedCategory(cat);
+                    onClose();
+                  }}
+                  className={`px-4 py-2.5 rounded-full border ${
+                    selectedCategory === cat
+                      ? 'bg-gray-900 border-gray-900'
+                      : 'bg-white border-gray-200'
+                  }`}
                 >
-                  <Text className={`font-bold capitalize ${selectedCategory === cat ? 'text-white' : 'text-gray-600'}`}>
+                  <Text
+                    className={`font-bold capitalize ${
+                      selectedCategory === cat ? 'text-white' : 'text-gray-600'
+                    }`}
+                  >
                     {cat}
                   </Text>
                 </TouchableOpacity>

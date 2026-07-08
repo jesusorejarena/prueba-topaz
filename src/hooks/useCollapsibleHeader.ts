@@ -1,5 +1,9 @@
 import { useRef, useState } from 'react';
-import { Animated, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import {
+  Animated,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from 'react-native';
 
 export function useCollapsibleHeader(initialPaddingTop = 200) {
   const translateY = useRef(new Animated.Value(0)).current;
@@ -11,7 +15,7 @@ export function useCollapsibleHeader(initialPaddingTop = 200) {
 
   const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const currentY = e.nativeEvent.contentOffset.y;
-    
+
     if (currentY < 0) return;
 
     if (currentY <= 50) {
@@ -25,7 +29,7 @@ export function useCollapsibleHeader(initialPaddingTop = 200) {
     }
 
     const diff = currentY - lastScrollY.current;
-    
+
     if (Math.abs(diff) > 10) {
       if (diff > 0) {
         Animated.timing(translateY, {

@@ -1,6 +1,19 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Animated, LayoutChangeEvent } from 'react-native';
-import { Search, X, SlidersHorizontal, ChevronRight } from 'lucide-react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  Animated,
+  LayoutChangeEvent,
+} from 'react-native';
+import {
+  Search,
+  X,
+  SlidersHorizontal,
+  ChevronRight,
+} from 'lucide-react-native';
 import { COLORS } from '../constants/theme';
 
 interface ProductsHeaderProps {
@@ -31,12 +44,18 @@ export default function ProductsHeader({
   onTitleLayout,
 }: ProductsHeaderProps) {
   return (
-    <Animated.View 
-      onLayout={(e: LayoutChangeEvent) => onHeaderLayout(e.nativeEvent.layout.height)}
+    <Animated.View
+      onLayout={(e: LayoutChangeEvent) =>
+        onHeaderLayout(e.nativeEvent.layout.height)
+      }
       style={{ transform: [{ translateY }] }}
       className="absolute top-0 left-0 right-0 z-10 bg-gray-50 px-5 pb-4 pt-2"
     >
-      <View onLayout={(e: LayoutChangeEvent) => onTitleLayout(e.nativeEvent.layout.height)}>
+      <View
+        onLayout={(e: LayoutChangeEvent) =>
+          onTitleLayout(e.nativeEvent.layout.height)
+        }
+      >
         <Text className="text-4xl font-black text-indigo-600 tracking-tight leading-tight mb-4">
           Encuentra lo que buscas
         </Text>
@@ -54,31 +73,47 @@ export default function ProductsHeader({
             onChangeText={setSearchQuery}
           />
           {searchQuery.length > 0 && (
-            <TouchableOpacity onPress={() => setSearchQuery('')} className="p-1">
+            <TouchableOpacity
+              onPress={() => setSearchQuery('')}
+              className="p-1"
+            >
               <X size={18} color={COLORS.textLight} />
             </TouchableOpacity>
           )}
         </View>
-        <TouchableOpacity 
+        <TouchableOpacity
           onPress={toggleFilters}
-          className={`h-12 w-12 rounded-2xl items-center justify-center ${showFilters ? 'bg-indigo-600' : 'bg-white border border-gray-100'}`}
+          className={`h-12 w-12 rounded-2xl items-center justify-center ${
+            showFilters ? 'bg-indigo-600' : 'bg-white border border-gray-100'
+          }`}
         >
-          <SlidersHorizontal size={20} color={showFilters ? '#FFF' : COLORS.textDark} />
+          <SlidersHorizontal
+            size={20}
+            color={showFilters ? '#FFF' : COLORS.textDark}
+          />
         </TouchableOpacity>
       </View>
 
       {/* Categories */}
       <View className="-mx-5">
-        <ScrollView 
-          horizontal 
+        <ScrollView
+          horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerClassName="px-5 gap-2"
         >
           <TouchableOpacity
             onPress={() => setSelectedCategory(null)}
-            className={`px-4 py-2.5 rounded-full border ${!selectedCategory ? 'bg-gray-900 border-gray-900' : 'bg-white border-gray-200'}`}
+            className={`px-4 py-2.5 rounded-full border ${
+              !selectedCategory
+                ? 'bg-gray-900 border-gray-900'
+                : 'bg-white border-gray-200'
+            }`}
           >
-            <Text className={`font-bold ${!selectedCategory ? 'text-white' : 'text-gray-600'}`}>
+            <Text
+              className={`font-bold ${
+                !selectedCategory ? 'text-white' : 'text-gray-600'
+              }`}
+            >
               Todos
             </Text>
           </TouchableOpacity>
@@ -86,9 +121,17 @@ export default function ProductsHeader({
             <TouchableOpacity
               key={index}
               onPress={() => setSelectedCategory(cat)}
-              className={`px-4 py-2.5 rounded-full border ${selectedCategory === cat ? 'bg-gray-900 border-gray-900' : 'bg-white border-gray-200'}`}
+              className={`px-4 py-2.5 rounded-full border ${
+                selectedCategory === cat
+                  ? 'bg-gray-900 border-gray-900'
+                  : 'bg-white border-gray-200'
+              }`}
             >
-              <Text className={`font-bold capitalize ${selectedCategory === cat ? 'text-white' : 'text-gray-600'}`}>
+              <Text
+                className={`font-bold capitalize ${
+                  selectedCategory === cat ? 'text-white' : 'text-gray-600'
+                }`}
+              >
                 {cat}
               </Text>
             </TouchableOpacity>
@@ -98,9 +141,7 @@ export default function ProductsHeader({
               onPress={() => setShowAllCategories(true)}
               className="px-4 py-2.5 rounded-full border bg-indigo-50 border-indigo-100 flex-row items-center"
             >
-              <Text className="font-bold text-indigo-600 mr-1">
-                Ver todas
-              </Text>
+              <Text className="font-bold text-indigo-600 mr-1">Ver todas</Text>
               <ChevronRight size={16} color={COLORS.primary} />
             </TouchableOpacity>
           )}

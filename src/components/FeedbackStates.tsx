@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, Text, ActivityIndicator, Modal, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  Modal,
+  TouchableOpacity,
+} from 'react-native';
 import { ShoppingBag, AlertCircle, Search } from 'lucide-react-native';
 import { COLORS } from '../constants/theme';
 
@@ -27,7 +33,10 @@ interface ProductsErrorStateProps {
   onRefetch: () => void;
 }
 
-export function ProductsErrorState({ error, onRefetch }: ProductsErrorStateProps) {
+export function ProductsErrorState({
+  error,
+  onRefetch,
+}: ProductsErrorStateProps) {
   return (
     <View className="flex-1 bg-gray-50 justify-center items-center px-6">
       <View className="bg-red-100 p-6 rounded-full mb-6">

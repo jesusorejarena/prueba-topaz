@@ -47,11 +47,16 @@ function TabIcon({ routeName, focused, size }: TabIconProps) {
         strokeWidth={focused ? 2.5 : 2}
       />
       {routeName === 'Favorites' && favoritesCount > 0 && (
-        <View 
+        <View
           className="absolute -top-1.5 -right-3 bg-rose-500 rounded-full min-w-[18px] h-[18px] items-center justify-center px-1"
-          style={{ borderWidth: 2, borderColor: focused ? COLORS.primary : '#F3F4F6' }}
+          style={{
+            borderWidth: 2,
+            borderColor: focused ? COLORS.primary : '#F3F4F6',
+          }}
         >
-          <Text className="text-white text-[9px] font-black leading-none">{favoritesCount}</Text>
+          <Text className="text-white text-[9px] font-black leading-none">
+            {favoritesCount}
+          </Text>
         </View>
       )}
     </View>
@@ -61,7 +66,7 @@ function TabIcon({ routeName, focused, size }: TabIconProps) {
 function TabNavigator() {
   const insets = useSafeAreaInsets();
   const { width } = Dimensions.get('window');
-  
+
   const tabBarWidth = width - 40;
   const tabBarHeight = 56;
   const tabWidth = tabBarWidth / 2;
@@ -70,47 +75,41 @@ function TabNavigator() {
     <Tab.Navigator
       tabBarPosition="bottom"
       screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused }) => (
-            <TabIcon routeName={route.name} focused={focused} size={24} />
-          ),
-          tabBarIndicatorStyle: {
-            height: tabBarHeight - 12,
-            width: tabWidth - 12,
-            backgroundColor: COLORS.primary,
-            marginBottom: 6,
-            marginLeft: 6,
-            borderRadius: 40,
-          },
-          tabBarIndicatorContainerStyle: {
-            height: tabBarHeight,
-          },
-          tabBarStyle: {
-            position: 'absolute',
-            bottom: Math.max(insets.bottom, 10),
-            shadowOpacity: 0,
-            shadowRadius: 0,
-            elevation: 0,
-            width: tabBarWidth,
-            height: tabBarHeight,
-            alignSelf: 'center',
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: 40,
-            backgroundColor: '#F3F4F6',
-            borderTopWidth: 0,
-          },
-          tabBarPressColor: 'transparent',
-          tabBarShowLabel: false,
-        })}
-      >
-        <Tab.Screen
-          name="Products"
-          component={ProductsScreen}
-        />
-        <Tab.Screen
-          name="Favorites"
-          component={FavoritesScreen}
-        />
+        tabBarIcon: ({ focused }) => (
+          <TabIcon routeName={route.name} focused={focused} size={24} />
+        ),
+        tabBarIndicatorStyle: {
+          height: tabBarHeight - 12,
+          width: tabWidth - 12,
+          backgroundColor: COLORS.primary,
+          marginBottom: 6,
+          marginLeft: 6,
+          borderRadius: 40,
+        },
+        tabBarIndicatorContainerStyle: {
+          height: tabBarHeight,
+        },
+        tabBarStyle: {
+          position: 'absolute',
+          bottom: Math.max(insets.bottom, 10),
+          shadowOpacity: 0,
+          shadowRadius: 0,
+          elevation: 0,
+          width: tabBarWidth,
+          height: tabBarHeight,
+          alignSelf: 'center',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: 40,
+          backgroundColor: '#F3F4F6',
+          borderTopWidth: 0,
+        },
+        tabBarPressColor: 'transparent',
+        tabBarShowLabel: false,
+      })}
+    >
+      <Tab.Screen name="Products" component={ProductsScreen} />
+      <Tab.Screen name="Favorites" component={FavoritesScreen} />
     </Tab.Navigator>
   );
 }

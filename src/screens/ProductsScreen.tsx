@@ -4,30 +4,38 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { COLORS } from '../constants/theme';
 import ProductCard from '../components/ProductCard';
-import { useProducts, SortOption } from '../hooks/useProducts';
+import { useProducts } from '../hooks/useProducts';
 import { useCollapsibleHeader } from '../hooks/useCollapsibleHeader';
 
 import ProductsHeader from '../components/ProductsHeader';
 import CategoriesModal from '../components/CategoriesModal';
 import FiltersModal from '../components/FiltersModal';
-import { ProductsLoadingState, ProductsErrorState, ProductsEmptyState } from '../components/FeedbackStates';
+import {
+  ProductsLoadingState,
+  ProductsErrorState,
+  ProductsEmptyState,
+} from '../components/FeedbackStates';
 
 export default function ProductsScreen() {
-  const { 
-    products, 
+  const {
+    products,
     categories,
     initialLoad,
     loading,
     isRefreshing,
     isFetchingNextPage,
     hasMore,
-    error, 
+    error,
     refetch,
     fetchNextPage,
-    searchQuery, setSearchQuery,
-    selectedCategory, setSelectedCategory,
-    sortBy, setSortBy,
-    priceRange, setPriceRange
+    searchQuery,
+    setSearchQuery,
+    selectedCategory,
+    setSelectedCategory,
+    sortBy,
+    setSortBy,
+    priceRange,
+    setPriceRange,
   } = useProducts();
 
   const [showFilters, setShowFilters] = useState(false);
@@ -67,15 +75,15 @@ export default function ProductsScreen() {
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
           setShowAllCategories={setShowAllCategories}
-          onHeaderLayout={(height) => {
+          onHeaderLayout={height => {
             headerHeight.current = height;
             setPaddingTop(height);
           }}
-          onTitleLayout={(height) => {
+          onTitleLayout={height => {
             titleHeight.current = height;
           }}
         />
-        
+
         <FlatList
           data={products}
           renderItem={({ item }) => <ProductCard item={item} />}

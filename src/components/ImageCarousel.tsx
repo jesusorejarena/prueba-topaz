@@ -8,7 +8,11 @@ interface ImageCarouselProps {
   insetsTop: number;
 }
 
-export default function ImageCarousel({ images, width, insetsTop }: ImageCarouselProps) {
+export default function ImageCarousel({
+  images,
+  width,
+  insetsTop,
+}: ImageCarouselProps) {
   const { activeIndex, handleScroll } = useImageCarousel(width);
 
   return (
@@ -44,9 +48,7 @@ export default function ImageCarousel({ images, width, insetsTop }: ImageCarouse
             <View
               key={index}
               className={`h-2 rounded-full transition-all duration-300 ${
-                index === activeIndex
-                  ? 'w-8 bg-indigo-600'
-                  : 'w-2 bg-black/20'
+                index === activeIndex ? 'w-8 bg-indigo-600' : 'w-2 bg-black/20'
               }`}
             />
           ))}

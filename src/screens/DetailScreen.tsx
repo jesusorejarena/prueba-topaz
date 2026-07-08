@@ -13,8 +13,7 @@ import { useRoute, RouteProp } from '@react-navigation/native';
 import {
   useSharedValue,
   useAnimatedStyle,
-  withSpring,
-  withSequence,
+  withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Star, AlertCircle } from 'lucide-react-native';
@@ -47,16 +46,16 @@ export default function DetailScreen() {
   const removeFavorite = useFavoritesStore(state => state.removeFavorite);
 
   const isFav = favorites.some(fav => fav.id === productId);
-  const scale = useSharedValue(1);
+  const fillProgress = useSharedValue(isFav ? 1 : 0);
 
   const handleToggleFavorite = () => {
     if (!product) return;
 
-    // Heart animation
-    scale.value = withSequence(
-      withSpring(1.4, { damping: 2, stiffness: 80 }),
-      withSpring(1, { damping: 4, stiffness: 40 }),
-    );
+    if (!isFav) {
+      fillProgress.value = withTiming(1, { duration: 450 });
+    } else {
+      fillProgress.value = withTiming(0, { duration: 300 });
+    }
 
     if (isFav) {
       removeFavorite(product.id);
@@ -65,9 +64,9 @@ export default function DetailScreen() {
     }
   };
 
-  const animatedHeartStyle = useAnimatedStyle(() => {
+  const animatedFillStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ scale: scale.value }],
+      height: fillProgress.value * 20,
     };
   });
 
@@ -205,7 +204,7 @@ export default function DetailScreen() {
         product={product}
         insetsBottom={insets.bottom}
         isFav={isFav}
-        animatedHeartStyle={animatedHeartStyle}
+        animatedFillStyle={animatedFillStyle}
         handleToggleFavorite={handleToggleFavorite}
       />
     </View>

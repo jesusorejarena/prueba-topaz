@@ -20,6 +20,7 @@ export default function BackButton({ onPress }: BackButtonProps) {
 
   return (
     <TouchableOpacity
+      testID="back-button"
       onPress={handlePress}
       activeOpacity={0.8}
       style={{ top: Math.max(insets.top + 10, 20) }}

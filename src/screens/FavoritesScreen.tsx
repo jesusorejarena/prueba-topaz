@@ -10,13 +10,17 @@ import FavoriteCard from '../components/FavoriteCard';
 export default function FavoritesScreen() {
   const favorites = useFavoritesStore(state => state.favorites);
   const clearFavorites = useFavoritesStore(state => state.clearFavorites);
-  const removeMultipleFavorites = useFavoritesStore(state => state.removeMultipleFavorites);
+  const removeMultipleFavorites = useFavoritesStore(
+    state => state.removeMultipleFavorites,
+  );
 
   const [isEditing, setIsEditing] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const handleToggleSelect = (id: number) => {
-    setSelectedIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+    setSelectedIds(prev =>
+      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id],
+    );
   };
 
   const handleDelete = () => {
@@ -36,8 +40,8 @@ export default function FavoritesScreen() {
         data={favorites}
         renderItem={({ item }) => (
           <View className="px-5">
-            <FavoriteCard 
-              item={item} 
+            <FavoriteCard
+              item={item}
               isEditing={isEditing}
               isSelected={selectedIds.includes(item.id)}
               onToggleSelect={() => handleToggleSelect(item.id)}
@@ -54,8 +58,11 @@ export default function FavoritesScreen() {
                 <Text className="text-4xl font-black text-indigo-600 tracking-tight leading-tight flex-1">
                   Tus cosas favoritas
                 </Text>
-                <TouchableOpacity 
-                  onPress={() => { setIsEditing(!isEditing); setSelectedIds([]); }} 
+                <TouchableOpacity
+                  onPress={() => {
+                    setIsEditing(!isEditing);
+                    setSelectedIds([]);
+                  }}
                   className="ml-4 bg-indigo-50 py-2.5 rounded-full active:bg-indigo-100 w-28 items-center justify-center"
                 >
                   <Text className="text-sm font-bold text-indigo-600">
@@ -64,13 +71,15 @@ export default function FavoritesScreen() {
                 </TouchableOpacity>
               </View>
               {isEditing && (
-                <TouchableOpacity 
+                <TouchableOpacity
                   onPress={handleDelete}
                   className="bg-rose-500 py-3.5 rounded-xl flex-row items-center justify-center mb-2 active:bg-rose-600"
                 >
                   <Trash2 size={20} color="#FFF" />
                   <Text className="text-white font-bold text-base ml-2">
-                    {selectedIds.length > 0 ? `Eliminar ${selectedIds.length} seleccionados` : 'Eliminar todos'}
+                    {selectedIds.length > 0
+                      ? `Eliminar ${selectedIds.length} seleccionados`
+                      : 'Eliminar todos'}
                   </Text>
                 </TouchableOpacity>
               )}
@@ -95,4 +104,3 @@ export default function FavoritesScreen() {
     </SafeAreaView>
   );
 }
-

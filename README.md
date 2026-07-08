@@ -1,97 +1,102 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# 🛍️ Mini-Tienda de Productos - React Native
 
-# Getting Started
+Esta es una aplicación móvil construida en **React Native CLI**, que consume la API de DummyJSON para listar productos y permite gestionar favoritos con almacenamiento persistente local.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+---
 
-## Step 1: Start Metro
+## 🛠️ Stack Tecnológico y Versiones Clave
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+- **React Native:** `0.86.0` (React Native CLI)
+- **React:** `19.2.3`
+- **Node.js:** `>= 22.11.0`
+- **Lenguaje:** TypeScript (`5.8.x`)
+- **Gestión de Estado Global:** Zustand (`^5.0.14`)
+- **Persistencia Local:** Async Storage (`^3.1.1`)
+- **Navegación:** React Navigation v7 (Bottom Tabs + Native Stack)
+- **Estilos:** NativeWind v4 (Tailwind CSS)
+- **Animaciones:** React Native Reanimated (`^4.5.1`)
+- **Testing:** Jest + React Native Testing Library
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+---
 
-```sh
-# Using npm
-npm start
+## 🚀 Requisitos Previos
 
-# OR using Yarn
-yarn start
-```
+Asegúrate de tener configurado tu entorno de desarrollo para React Native CLI antes de comenzar:
+- **Node.js** (Versión 22.11 o superior).
+- **Ruby** (Versión compatible con Cocoapods, usualmente >= 2.7).
+- **Watchman** instalado (`brew install watchman` en macOS).
+- **Xcode** (Para emular iOS).
+- **Android Studio** (Para emular Android) con SDK y emuladores configurados.
 
-## Step 2: Build and run your app
+---
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+## 📦 Instalación
 
-### Android
+1. **Clona el repositorio**
+   ```bash
+   git clone git@github.com:jesusorejarena/prueba-topaz.git
+   cd prueba-topaz
+   ```
 
-```sh
-# Using npm
-npm run android
+2. **Instala las dependencias de Node**
+   Puedes instalar todo (node_modules + pods) con un solo comando personalizado o paso a paso:
+   ```bash
+   npm install
+   ```
 
-# OR using Yarn
-yarn android
-```
+3. **Instala las dependencias de iOS (CocoaPods)**
+   ```bash
+   cd ios
+   bundle install
+   bundle exec pod install
+   cd ..
+   ```
+   *(Nota: Puedes correr `npm run pods` desde la raíz para hacer esto automáticamente).*
 
-### iOS
+---
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+## ▶️ Correr la Aplicación
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
 
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
+### Correr en iOS
+En una nueva ventana de la terminal, ejecuta:
+```bash
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### Correr en Android
+Abre un emulador en Android Studio o conecta un dispositivo físico y ejecuta:
+```bash
+npm run android
+```
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+---
 
-## Step 3: Modify your app
+## 🧪 Pruebas Unitarias (Testing)
 
-Now that you have successfully run the app, let's make changes!
+Se implementaron pruebas unitarias para componentes de interfaz y lógica de estado global utilizando **Jest** y **React Native Testing Library**.
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+Para correr la suite de pruebas:
+```bash
+npm run test
+```
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+---
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+## 🌟 Características y Cumplimiento
 
-## Congratulations! :tada:
+- ✅ **Lista de Productos:** Consumo de la API con FlatList optimizado y estados de Carga/Error.
+- ✅ **Detalle de Producto:** Información detallada con carrusel de imágenes paginado y botón de favorito interactivo.
+- ✅ **Favoritos Locales:** Uso de Zustand integrado con AsyncStorage para una persistencia rápida y centralizada.
+- ✅ **TypeScript Estricto:** Tipado completo de la API, componentes y Store.
+- ✅ **UI Moderna y Consistente:** Uso de Tailwind (NativeWind) garantizando escalabilidad en diseño.
+- ✅ **(Bonus) Animación:** Animación al añadir a favoritos usando Reanimated.
+- ✅ **(Bonus) Unit Testing:** Tests funcionales comprobables en comandos nativos.
 
-You've successfully run and modified your React Native App. :partying_face:
+---
 
-### Now what?
+## ⚠️ Nota de Seguridad (Archivos Sensibles)
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+Para facilitar la revisión y ejecución inmediata de esta prueba técnica, se han incluido deliberadamente en el repositorio archivos que normalmente son ignorados (como el archivo `.env`, el archivo `my-upload-key.keystore` y sus contraseñas). 
 
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+> **Aviso:** En un entorno de producción o en un proyecto real, estos archivos **jamás** se suben al control de versiones (Git) por estrictas razones de seguridad, y sus valores se manejan exclusivamente a través de variables de entorno seguras en el servidor de CI/CD o de forma local.
