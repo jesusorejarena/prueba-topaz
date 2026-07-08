@@ -1,26 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
-  Image,
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
   FlatList,
   useWindowDimensions,
-  StyleSheet,
 } from 'react-native';
 
-import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import Animated, {
+import { useRoute, RouteProp } from '@react-navigation/native';
+import {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
   withSequence,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ChevronLeft, Star, AlertCircle, Heart } from 'lucide-react-native';
+import { Star, AlertCircle } from 'lucide-react-native';
 
 import { RootStackParamList } from '../navigation';
 import { useFavoritesStore } from '../store/useFavoritesStore';
@@ -29,19 +26,20 @@ import { useProductDetail } from '../hooks/useProductDetail';
 import { useRelatedProducts } from '../hooks/useRelatedProducts';
 import ProductCard from '../components/ProductCard';
 
+import BackButton from '../components/BackButton';
+import ImageCarousel from '../components/ImageCarousel';
+import DetailFooter from '../components/DetailFooter';
+
 type DetailScreenRouteProp = RouteProp<RootStackParamList, 'Detail'>;
 
 export default function DetailScreen() {
   const route = useRoute<DetailScreenRouteProp>();
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const insets = useSafeAreaInsets();
   const { productId } = route.params;
   const { width } = useWindowDimensions();
 
   const { product, loading, error, refetch } = useProductDetail(productId);
   const { relatedProducts } = useRelatedProducts(product?.category, productId);
-  const [activeIndex, setActiveIndex] = useState(0);
 
   // Zustand Store
   const favorites = useFavoritesStore(state => state.favorites);
@@ -72,12 +70,6 @@ export default function DetailScreen() {
       transform: [{ scale: scale.value }],
     };
   });
-
-  const handleScroll = (event: any) => {
-    const contentOffsetX = event.nativeEvent.contentOffset.x;
-    const index = Math.round(contentOffsetX / width);
-    setActiveIndex(index);
-  };
 
   if (loading) {
     return (
@@ -117,63 +109,18 @@ export default function DetailScreen() {
 
   return (
     <View className="flex-1 bg-white">
-      {/* Custom Back Button */}
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        activeOpacity={0.8}
-        style={[styles.backButton, { top: Math.max(insets.top, 10) }]}
-        className="absolute z-50 w-11 h-11 bg-white/90 rounded-full items-center justify-center"
-      >
-        <ChevronLeft size={24} color={COLORS.textDark} />
-      </TouchableOpacity>
+      <BackButton />
 
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
-        {/* Horizontal Carousel */}
-        <View
-          className="bg-gray-50/80 rounded-b-[40px] overflow-hidden"
-          style={[styles.imageContainer, { paddingTop: insets.top }]}
-        >
-          <FlatList
-            data={imagesList}
-            horizontal
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            onScroll={handleScroll}
-            scrollEventThrottle={16}
-            keyExtractor={(_, index) => index.toString()}
-            renderItem={({ item }) => (
-              <View
-                style={{ width }}
-                className="h-full justify-center items-center p-6"
-              >
-                <Image
-                  source={{ uri: item }}
-                  className="w-full h-full"
-                  resizeMode="contain"
-                />
-              </View>
-            )}
-          />
-          {/* Pagination Indicators */}
-          {imagesList.length > 1 && (
-            <View className="absolute bottom-4 left-0 right-0 flex-row justify-center gap-2">
-              {imagesList.map((_, index) => (
-                <View
-                  key={index}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    index === activeIndex
-                      ? 'w-8 bg-indigo-600'
-                      : 'w-2 bg-black/20'
-                  }`}
-                />
-              ))}
-            </View>
-          )}
-        </View>
+        <ImageCarousel
+          images={imagesList}
+          width={width}
+          insetsTop={insets.top}
+        />
 
         {/* Product Details */}
         <View className="flex-1 bg-white rounded-t-[32px] mt-0 px-6 pt-8 pb-10">
@@ -243,68 +190,24 @@ export default function DetailScreen() {
               data={relatedProducts}
               horizontal
               showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.relatedListContainer}
-              keyExtractor={(item) => item.id.toString()}
+              contentContainerClassName="px-6 pb-5"
+              keyExtractor={item => item.id.toString()}
               renderItem={({ item }) => <ProductCard item={item} horizontal />}
             />
           </View>
         )}
-        
+
         {/* Extra padding to ensure ScrollView content isn't hidden behind the absolute footer */}
-        <View style={styles.spacer} />
+        <View className="h-[100px]" />
       </ScrollView>
 
-      {/* Modern Floating Action Footer */}
-      <View
-        className="absolute bottom-0 left-0 right-0 bg-white/80 border-t border-gray-100 px-6 py-4 flex-row items-center justify-between"
-        style={{ paddingBottom: Math.max(insets.bottom, 20) }}
-      >
-        <View>
-          <Text className="text-sm text-gray-500 font-medium">
-            Precio Total
-          </Text>
-          <Text className="text-2xl font-black text-gray-900">
-            ${product?.price.toFixed(2)}
-          </Text>
-        </View>
-        <TouchableOpacity
-          onPress={handleToggleFavorite}
-          activeOpacity={0.8}
-          className={`px-8 py-4 rounded-[20px] flex-row items-center ${
-            isFav
-              ? 'bg-rose-500'
-              : 'bg-indigo-600'
-          }`}
-        >
-          <Animated.View style={animatedHeartStyle} className="mr-2">
-            <Heart
-              size={20}
-              color={COLORS.background}
-              fill={isFav ? COLORS.background : 'transparent'}
-              strokeWidth={2.5}
-            />
-          </Animated.View>
-          <Text className="text-white text-base font-bold">
-            {isFav ? 'Quitar' : 'Añadir'}
-          </Text>
-        </TouchableOpacity>
-      </View>
+      <DetailFooter
+        product={product}
+        insetsBottom={insets.bottom}
+        isFav={isFav}
+        animatedHeartStyle={animatedHeartStyle}
+        handleToggleFavorite={handleToggleFavorite}
+      />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  backButton: {
-    left: 20,
-  },
-  imageContainer: {
-    height: 400,
-  },
-  relatedListContainer: {
-    paddingHorizontal: 24,
-    paddingBottom: 20,
-  },
-  spacer: {
-    height: 100,
-  },
-});
