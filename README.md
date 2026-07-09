@@ -38,20 +38,15 @@ Asegúrate de tener configurado tu entorno de desarrollo para React Native CLI a
    cd prueba-topaz
    ```
 
-2. **Instala las dependencias de Node**
-   Puedes instalar todo (node_modules + pods) con un solo comando personalizado o paso a paso:
+2. **Ejecuta el comando de configuración inicial (Setup)**
+   Si estás usando **macOS**, hemos configurado un comando único que instala todas las dependencias de Node, instala los CocoaPods de iOS y limpia la caché en un solo paso:
    ```bash
-   npm install
+   npm run setup
    ```
-
-3. **Instala las dependencias de iOS (CocoaPods)**
-   ```bash
-   cd ios
-   bundle install
-   bundle exec pod install
-   cd ..
-   ```
-   *(Nota: Puedes correr `npm run pods` desde la raíz para hacer esto automáticamente).*
+   > **Nota para Windows / Linux:** Como el comando anterior incluye scripts exclusivos de iOS, si estás en estos sistemas operativos, simplemente ejecuta:
+   > ```bash
+   > npm install
+   > ```
 
 ---
 
