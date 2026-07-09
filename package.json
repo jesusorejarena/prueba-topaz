@@ -27,8 +27,8 @@
     "android:bump:patch": "cd android && bundle exec fastlane bump type:patch",
     "ios:bump:patch": "cd ios && bundle exec fastlane bump type:patch",
     "// --- BUILD & EXPORT (Local) ---": "",
-    "build:android-aab": "ENVFILE=.env npx react-native build-android --mode productionRelease",
-    "build:android-apk": "ENVFILE=.env cd android && ./gradlew assembleProductionRelease && cd ../"
+    "build:android-aab": "ENVFILE=.env npx react-native build-android --mode release",
+    "build:android-apk": "ENVFILE=.env cd android && ./gradlew assembleRelease && cd ../"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^3.1.1",
